@@ -38,7 +38,6 @@ const MUIFormContextTemplate: React.FC = () => {
     password: yup.string().min(4).max(20).required(''),
   });
 
-
   /**
    * Instead of destructuring this, we store all the functionality from
    * useForm in this methods variable.  We will spread this into the
