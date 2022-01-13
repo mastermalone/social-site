@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { Box, Button } from '@material-ui/core';
 import ControlledTextField from '../../../Form/ControlledTextField';
 import { State } from '../../store/MultiStepStore';
-
+import useStyles from '../../styles';
 interface StepOneProps {
   formSubmitHandler: SubmitHandler<State>;
   state: State;
@@ -25,27 +25,33 @@ const StepOneTemplate: React.FC<StepOneProps> = ({
     resolver: yupResolver(schema),
     defaultValues: state,
   });
+
+  const styles = useStyles();
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(formSubmitHandler)}>
-        <Box>
-          <ControlledTextField
-            defaultValue=""
-            label="Enter your user name"
-            name="username"
-            type="text"
-          />
-          <ControlledTextField
-            defaultValue=""
-            label="Enter your password"
-            name="password"
-            type="password"
-          />
-          <Button variant="contained" color="secondary" type="submit">
-            Next
-          </Button>
-        </Box>
-      </form>
+      <Box className={styles.formStyle}>
+        <form onSubmit={methods.handleSubmit(formSubmitHandler)}>
+          <Box>
+            <ControlledTextField
+              defaultValue=""
+              label="Enter your user name"
+              name="username"
+              type="text"
+              className={styles.textField}
+            />
+            <ControlledTextField
+              defaultValue=""
+              label="Enter your password"
+              name="password"
+              type="password"
+              className={styles.textField}
+            />
+            <Button variant="contained" color="secondary" type="submit">
+              Next
+            </Button>
+          </Box>
+        </form>
+      </Box>
     </FormProvider>
   );
 };

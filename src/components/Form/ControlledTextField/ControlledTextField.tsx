@@ -8,6 +8,7 @@ interface IControlledTextField {
   defaultValue: string;
   label: string;
   type: React.HTMLInputTypeAttribute;
+  className?: string;
 }
 
 const ControlledTextField: React.FC<IControlledTextField> = ({
@@ -15,10 +16,13 @@ const ControlledTextField: React.FC<IControlledTextField> = ({
   label,
   name,
   type,
+  className,
 }: IControlledTextField): JSX.Element => {
-
   const styles = useCOntrolledTextFieldStyles();
-  const { control, formState: { errors } } = useFormContext()
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <Box className={styles.field}>
@@ -29,17 +33,17 @@ const ControlledTextField: React.FC<IControlledTextField> = ({
         render={({ field }) => (
           <TextField
             label={label}
-            variant='outlined'
+            variant="outlined"
             type={type}
             error={!!errors[name]}
+            className={className}
             helperText={errors[name] ? errors[name]?.message : ''}
             {...field}
           />
         )}
       />
     </Box>
-  )
-}
+  );
+};
 
-export default ControlledTextField
-
+export default ControlledTextField;

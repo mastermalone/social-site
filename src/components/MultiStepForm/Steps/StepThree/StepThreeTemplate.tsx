@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { Box, Button } from '@material-ui/core';
 import ControlledTextField from '../../../Form/ControlledTextField';
 import { State } from '../../store/MultiStepStore';
+import useStyles from '../../styles';
 
 interface StepTwoProps {
   formSubmitHandler: SubmitHandler<State>;
@@ -28,43 +29,55 @@ const StepTwoTemplate: React.FC<StepTwoProps> = ({
     defaultValues: state,
   });
 
+  const styles = useStyles();
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(formSubmitHandler)}>
-        <Box>
-          <ControlledTextField
-            defaultValue=""
-            label="Enter your address"
-            name="address"
-            type="text"
-          />
-          <ControlledTextField
-            defaultValue=""
-            label="Enter your phone number"
-            name="phoneNumber"
-            type="text"
-          />
-          <ControlledTextField
-            defaultValue=""
-            label="Enter your email address"
-            name="email"
-            type="text"
-          />
+      <Box className={styles.formStyle}>
+        <form onSubmit={methods.handleSubmit(formSubmitHandler)}>
           <Box>
-            <Button
-              variant="outlined"
-              color="secondary"
-              type="button"
-              onClick={prev}
-            >
-              Prev
-            </Button>
-            <Button variant="contained" color="primary" type="submit">
-              Submit
-            </Button>
+            <ControlledTextField
+              defaultValue=""
+              label="Enter your address"
+              name="address"
+              type="text"
+              className={styles.textField}
+            />
+            <ControlledTextField
+              defaultValue=""
+              label="Enter your phone number"
+              name="phoneNumber"
+              type="text"
+              className={styles.textField}
+            />
+            <ControlledTextField
+              defaultValue=""
+              label="Enter your email address"
+              name="email"
+              type="text"
+              className={styles.textField}
+            />
+            <Box className={styles.controls}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                type="button"
+                onClick={prev}
+                className={styles.button}
+              >
+                Prev
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className={styles.button}
+              >
+                Submit
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </form>
+        </form>
+      </Box>
     </FormProvider>
   );
 };
