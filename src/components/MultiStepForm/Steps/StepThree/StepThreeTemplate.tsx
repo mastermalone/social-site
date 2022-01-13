@@ -15,13 +15,13 @@ interface StepTwoProps {
 
 const StepTwoTemplate: React.FC<StepTwoProps> = ({
   formSubmitHandler,
-  prev,
   state,
+  prev,
 }) => {
   const schema = yup.object().shape({
-    firstName: yup.string().min(4).max(20).required(''),
-    lastName: yup.string().required('Username is required'),
-    age: yup.number().min(18).max(120).required('Age is required'),
+    address: yup.string().required('Address is required'),
+    phoneNumber: yup.string().required('Phone number is required'),
+    email: yup.string().email().required('Email is required'),
   });
   const methods = useForm<State>({
     resolver: yupResolver(schema),
@@ -34,20 +34,20 @@ const StepTwoTemplate: React.FC<StepTwoProps> = ({
         <Box>
           <ControlledTextField
             defaultValue=""
-            label="Enter your first name"
-            name="firstName"
+            label="Enter your address"
+            name="address"
             type="text"
           />
           <ControlledTextField
             defaultValue=""
-            label="Enter your last name"
-            name="lastName"
+            label="Enter your phone number"
+            name="phoneNumber"
             type="text"
           />
           <ControlledTextField
             defaultValue=""
-            label="Enter your age"
-            name="age"
+            label="Enter your email address"
+            name="email"
             type="text"
           />
           <Box>
@@ -59,8 +59,8 @@ const StepTwoTemplate: React.FC<StepTwoProps> = ({
             >
               Prev
             </Button>
-            <Button variant="contained" color="secondary" type="submit">
-              Next
+            <Button variant="contained" color="primary" type="submit">
+              Submit
             </Button>
           </Box>
         </Box>

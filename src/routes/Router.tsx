@@ -7,20 +7,21 @@ import MultiStepPage from '../pages/MultiStepPage/';
 import { Route, Switch } from 'react-router-dom';
 import StepTwo from '../components/MultiStepForm/Steps/StepTwo';
 import StepOne from '../components/MultiStepForm/Steps/StepOne';
+import StepThree from '../components/MultiStepForm/Steps/StepThree';
 
 const Routes: React.FC = () => {
-
   return (
     <Switch>
-      <Route exact path='/' component={LoginPage} />
+      <Route exact path="/" component={LoginPage} />
       <Route exact path="/social" component={LandingPage} />
       <Route exact path="/news" component={NewsFeed} />
       <Route exact path="/multi-step" component={MultiStepPage} />
-      <Route exact path='/multi-step/step-one' component={StepOne} />
-      <Route exact path='/multi-step/step-two' component={StepTwo} />
+      <Route exact path="/multi-step/step-one" component={StepOne} />
+      <Route exact path="/multi-step/step-two" component={StepTwo} />
+      <Route exact path="/multi-step/step-three" component={StepThree} />
       <Route />
     </Switch>
-  )
-}
+  );
+};
 
 export default Routes;
