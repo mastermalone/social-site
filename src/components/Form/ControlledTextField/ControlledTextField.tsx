@@ -1,3 +1,4 @@
+import { DevTool } from '@hookform/devtools';
 import { Box, TextField } from '@material-ui/core';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -42,6 +43,7 @@ const ControlledTextField: React.FC<IControlledTextField> = ({
           />
         )}
       />
+      <DevTool control={control} />
     </Box>
   );
 };

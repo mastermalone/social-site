@@ -8,6 +8,7 @@ import { Route, Switch } from 'react-router-dom';
 import StepTwo from '../components/MultiStepForm/Steps/StepTwo';
 import StepOne from '../components/MultiStepForm/Steps/StepOne';
 import StepThree from '../components/MultiStepForm/Steps/StepThree';
+import ControlledAccordion from '../components/Accordion/ControlledAccordion';
 
 const Routes: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ const Routes: React.FC = () => {
       <Route exact path="/multi-step/step-one" component={StepOne} />
       <Route exact path="/multi-step/step-two" component={StepTwo} />
       <Route exact path="/multi-step/step-three" component={StepThree} />
-      <Route />
+      <Route exact path="/accordion" component={ControlledAccordion} />
     </Switch>
   );
 };
