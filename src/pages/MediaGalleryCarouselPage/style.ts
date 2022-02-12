@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) =>
     galleryItemTitle: {
       padding: theme.spacing(4),
     },
+    chips: {
+      marginRight: theme.spacing(2),
+    },
     loadingIndicator: {
       margin: '0 auto',
       width: 120,

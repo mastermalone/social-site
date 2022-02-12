@@ -4,7 +4,9 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 // Plugins
 import lgVideo from 'lightgallery/plugins/video';
+import ldVimeo from '@vimeo/player';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import lgZoom from 'lightgallery/plugins/zoom';
 import LightGallery from 'lightgallery/react';
 import 'lightgallery/css/lightgallery.css';
 import 'lightgallery/css/lg-zoom.css';
@@ -16,10 +18,11 @@ import useRenderArrayToStrings from './useRenderJSXArrayToStrings';
 
 export type ListingMediaGallery = {
   type: 'IMAGE' | 'AUDIO' | 'VIDEO';
-  mediaThumbnail: string;
-  mediaUrl: string;
+  thumbnailUrl?: string;
+  mediaUrl?: string;
   tags: ListingRoleTag[];
   title: string;
+  embedUrl?: string;
 };
 
 interface MediaGalleryCarouselPageTemplateProps {
@@ -33,16 +36,28 @@ const MediaGalleryCarouselPage: React.FC<MediaGalleryCarouselPageTemplateProps> 
     const preRenderedChips = useRenderArrayToStrings(
       useMemo(
         () =>
-          mediaGallery.map(({ tags, title }) => {
+          mediaGallery.map(({ tags, title }, idx) => {
             return (
-              <>
-                <p className={styles.galleryItemTitle}>{title}</p>
+              <div key={`media_gallery_${idx}`}>
+                <p
+                  className={styles.galleryItemTitle}
+                  key={`${title}_${idx}_title`}
+                >
+                  {title}
+                </p>
                 {tags &&
-                  tags.map((tag) => <Chip label={tag.name} color="primary" />)}
-              </>
+                  tags.map((tag, index) => (
+                    <Chip
+                      className={styles.chips}
+                      label={tag.name}
+                      color="primary"
+                      key={`${tag.name}_${index}_chip`}
+                    />
+                  ))}
+              </div>
             );
           }),
-        [mediaGallery, styles.galleryItemTitle]
+        [mediaGallery, styles.chips, styles.galleryItemTitle]
       )
     );
     return (
@@ -55,22 +70,78 @@ const MediaGalleryCarouselPage: React.FC<MediaGalleryCarouselPageTemplateProps> 
               autoplayFirstVideo={false}
               thumbnail={true}
               autoplay={false}
-              plugins={[lgVideo, lgThumbnail]}
+              plugins={[lgVideo, lgThumbnail, lgZoom]}
+              download={false}
+              zoomFromOrigin
             >
               {mediaGallery?.map((gallery, idx) => (
-                // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a
-                  key={`${gallery.title}_${idx}_a`}
-                  className={styles.galleryImage}
-                  // href={gallery.mediaThumbnail}
-                  data-src={gallery.mediaUrl}
-                  // data-video={`{"source": [{"src":"${gallery.mediaUrl}", "type":"video/mp4"}], "attributes": {"preload": false, "controls": true}}`}
-                  data-poster={gallery.mediaThumbnail}
-                  data-sub-html={preRenderedChips[idx]}
-                  // data-sub-html="<h4>'Peck Pocketed' by Kevin Herron | Disney Favorite</h4>"
-                >
-                  <img src={gallery.mediaThumbnail} alt="" />
-                </a>
+                <>
+                  {gallery.embedUrl && (
+                    //eslint-disable-next-line jsx-a11y/anchor-is-valid
+                    <a
+                      key={`${gallery.title}_${idx}_embed`}
+                      className={styles.galleryImage}
+                      data-src={gallery.embedUrl}
+                      data-poster={gallery.thumbnailUrl}
+                      data-sub-html={preRenderedChips[idx]}
+                    >
+                      <img
+                        src={gallery.thumbnailUrl}
+                        key={`${gallery.title}_${idx}_img`}
+                        alt=""
+                      />
+                    </a>
+                  )}
+                  {gallery.mediaUrl && gallery.type !== 'IMAGE' && (
+                    //eslint-disable-next-line jsx-a11y/anchor-is-valid
+                    <a
+                      key={`${gallery.title}_${idx}_html5_video`}
+                      className={styles.galleryImage}
+                      data-video={`{"source": [{"src":"${gallery.mediaUrl}", "type":"video/mp4"}], "attributes": {"preload": false, "controls": true}}`}
+                      data-poster={gallery.thumbnailUrl}
+                      data-sub-html={preRenderedChips[idx]}
+                    >
+                      <img
+                        src={gallery.thumbnailUrl}
+                        key={`${gallery.title}_${idx}_img`}
+                        alt=""
+                      />
+                    </a>
+                  )}
+                  {gallery.type === 'AUDIO' && (
+                    //eslint-disable-next-line jsx-a11y/anchor-is-valid
+                    <a
+                      key={`${gallery.title}_${idx}_audio`}
+                      className={styles.galleryImage}
+                      data-video={`{"source": [{"src":"${gallery.mediaUrl}", "type":"audio/mp3"}], "attributes": {"preload": false, "controls": true}}`}
+                      data-poster={gallery.thumbnailUrl}
+                      data-sub-html={preRenderedChips[idx]}
+                    >
+                      <img
+                        src={gallery.thumbnailUrl}
+                        key={`${gallery.title}_${idx}_img`}
+                        alt=""
+                      />
+                    </a>
+                  )}
+
+                  {gallery.type === 'IMAGE' && (
+                    <a
+                      key={`${gallery.title}_${idx}_image`}
+                      className={styles.galleryImage}
+                      data-src={gallery.mediaUrl}
+                      data-lg-size="1000-565"
+                      href={gallery.mediaUrl}
+                      data-sub-html={preRenderedChips[idx]}
+                    >
+                      <img
+                        src={gallery.mediaUrl}
+                        key={`${gallery.title}_${idx}_img`}
+                        alt=""
+                      />
+                    </a>
+                  )}
+                </>
               ))}
             </LightGallery>
           )}
