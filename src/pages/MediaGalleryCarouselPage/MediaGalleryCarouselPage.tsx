@@ -15,6 +15,7 @@ import 'lightgallery/css/lg-video.css';
 import { ListingRoleTag } from '../../components/MultiMediaCard/MultiMediaCard';
 import useStyles from './style';
 import useRenderArrayToStrings from './useRenderJSXArrayToStrings';
+import LightGalleryMediaPlayer from '../../components/LightGalleryMediaPlayer';
 
 export type ListingMediaGallery = {
   type: 'IMAGE' | 'AUDIO' | 'VIDEO';
@@ -134,17 +135,22 @@ const MediaGalleryCarouselPage: React.FC<MediaGalleryCarouselPageTemplateProps> 
                       href={gallery.mediaUrl}
                       data-sub-html={preRenderedChips[idx]}
                     >
-                      <img
-                        src={gallery.mediaUrl}
-                        key={`${gallery.title}_${idx}_img`}
-                        alt=""
-                      />
+                      <div>
+                        <img
+                          src={gallery.mediaUrl}
+                          key={`${gallery.title}_${idx}_img`}
+                          alt=""
+                        />
+                      </div>
                     </a>
                   )}
                 </>
               ))}
             </LightGallery>
           )}
+          {/* <LightGalleryMediaPlayer list={mediaGallery}>
+            <img src="https://place-puppy.com/1000x565" alt="" />
+          </LightGalleryMediaPlayer> */}
         </Box>
       </>
     );
