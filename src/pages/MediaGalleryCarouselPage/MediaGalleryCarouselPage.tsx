@@ -61,6 +61,8 @@ const MediaGalleryCarouselPage: React.FC<MediaGalleryCarouselPageTemplateProps> 
         [mediaGallery, styles.chips, styles.galleryItemTitle]
       )
     );
+
+    console.log('preRenderedChips', preRenderedChips?.[0]);
     return (
       <>
         <Box>The carousel goes here</Box>
@@ -139,7 +141,7 @@ const MediaGalleryCarouselPage: React.FC<MediaGalleryCarouselPageTemplateProps> 
                         <img
                           src={gallery.mediaUrl}
                           key={`${gallery.title}_${idx}_img`}
-                          alt=""
+                          alt="This is some al text"
                         />
                       </div>
                     </a>
